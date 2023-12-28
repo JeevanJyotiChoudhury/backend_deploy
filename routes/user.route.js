@@ -58,21 +58,6 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
-//logout
-userRouter.get("/logout", (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  try {
-    jwt.verify(token, "TOKEN", (err, decoded) => {
-      if (err) {
-        return res.status(400).json({ error: "Invalid token." });
-      }
-      res.status(200).json({ msg: "User has been logged out" });
-    });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
 module.exports = {
   userRouter,
 };
