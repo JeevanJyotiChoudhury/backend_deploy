@@ -7,9 +7,9 @@ const userRouter = express.Router();
 
 //register
 userRouter.post("/register", async (req, res) => {
-  const { name, userName, email, phone, password } = req.body;
+  const { userName, password } = req.body;
   try {
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await UserModel.findOne({ userName });
     if (existingUser) {
       return res
         .status(400)
@@ -20,10 +20,7 @@ userRouter.post("/register", async (req, res) => {
         return res.status(400).json({ error: err.message });
       }
       const user = new UserModel({
-        name,
         userName,
-        email,
-        phone,
         password: hash,
       });
       await user.save();
@@ -36,13 +33,13 @@ userRouter.post("/register", async (req, res) => {
 
 //login
 userRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ userName });
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
-          let token = jwt.sign({ user: user.email }, "TOKEN", {
+          let token = jwt.sign({ user: user.userName }, "TOKEN", {
             expiresIn: "5d",
           });
           res.json({ msg: "User logged in successfully.", token });
