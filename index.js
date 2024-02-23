@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://audio-recorder-app.vercel.app",
+    origin: "*",
   })
 );
 app.use("/api/audios", audioRoutes);
