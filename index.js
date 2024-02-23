@@ -7,7 +7,11 @@ const { audioRoutes } = require("./routes/audio.route");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://audio-recorder-app.vercel.app",
+  })
+);
 app.use("/api/audios", audioRoutes);
 
 app.listen(process.env.port, async () => {
