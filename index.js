@@ -2,15 +2,13 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const { connection } = require("./db");
-const { userRouter } = require("./routes/user.route");
-const { fileRouter } = require("./routes/file.route");
+const { audioRoutes } = require("./routes/audio.route");
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
-
-app.use("/user", userRouter);
-app.use("/file",fileRouter)
+app.use("/api/audios", audioRoutes);
 
 app.listen(process.env.port, async () => {
   try {
