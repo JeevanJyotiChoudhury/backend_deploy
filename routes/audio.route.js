@@ -16,13 +16,6 @@ const s3 = new aws.S3({
   region: "ap-south-1",
 });
 
-audioRoutes.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
 audioRoutes.post("/", upload.single("audio"), async (req, res) => {
   const { originalname, buffer } = req.file;
 
